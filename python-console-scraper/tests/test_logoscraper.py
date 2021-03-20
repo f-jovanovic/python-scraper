@@ -9,17 +9,28 @@ testHTML4 = "<a href='www.testbase.com'><img src='https://www.test.com'></img></
 
 
 def test_get_logo_class():
-    assert get_logo(BeautifulSoup(testHTML, "html.parser"), "www.testbase.com") == "https://www.test.com"
+    assert (
+        get_logo(BeautifulSoup(testHTML, "html.parser"), "www.testbase.com")
+        == "https://www.test.com"
+    )
 
 
 def test_get_logo_id():
-    assert get_logo(BeautifulSoup(testHTML2, "html.parser"), "www.testbase.com") == "https://www.test.com"
+    assert (
+        get_logo(BeautifulSoup(testHTML2, "html.parser"), "www.testbase.com")
+        == "https://www.test.com"
+    )
 
 
 def test_get_logo_src():
-    assert get_logo(BeautifulSoup(testHTML3, "html.parser"), "www.testbase.com") == "https://www.testlogo.com"
+    assert (
+        get_logo(BeautifulSoup(testHTML3, "html.parser"), "www.testbase.com")
+        == "https://www.testlogo.com"
+    )
 
 
 def test_get_logo_href():
-    assert get_logo(BeautifulSoup(testHTML4, "html.parser"), "www.testbase.com") == "https://www.test.com"
-
+    assert (
+        get_logo(BeautifulSoup(testHTML4, "html.parser"), "www.testbase.com")
+        == "https://www.test.com"
+    )
