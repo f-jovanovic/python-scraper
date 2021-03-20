@@ -6,3 +6,6 @@ class PageData:
         self.URL = url
         self.logoURL = logourl
         self.phoneNumbers = phonenumbers
+
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__)
