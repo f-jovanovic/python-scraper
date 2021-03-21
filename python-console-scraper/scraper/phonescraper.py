@@ -4,11 +4,15 @@ import re
 def get_phones(html):
     if html:
         phone_regex = re.compile(
-            r"\(?\+?\d{1,3}\)?[\ \-\/]?\d{2,4}[\ \-\/]?\d{2,4}[\ \-\/]?\d{2,4}"
+            r"\(?\+?\d{1,3}\)?[\ \-\/]?\d{2,4}[\ \-\/]?\d{2,4}[\ \-\/]?\d{2,4}[\ \-\/]?\d{0,3}"
         )
         replace_pattern = re.compile(r"[/\-.]")
         phone_numbers = []
-        elements = html.find_all(["a", "p", "span", "td", "div"])
+        try:
+            elements = html.find_all(["a", "p", "span", "td", "div"])
+        except AttributeError:
+            return None
+
         if elements:
             for item in elements:
                 try:

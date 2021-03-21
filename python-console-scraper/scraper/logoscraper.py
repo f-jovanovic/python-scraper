@@ -19,7 +19,7 @@ filters = [
 def get_logo(html, base_url):
     if html:
         filters.append({"href": lambda_check_for_homepage(base_url)})
-        result = test(html, base_url)
+        result = invoke_filters(html, base_url)
         if result:
             return result
 
@@ -54,7 +54,7 @@ def format_image_source(image_tag, base_url):
     return image_source
 
 
-def test(html, base_url):
+def invoke_filters(html, base_url):
     for item in filters:
         tags = html.find_all(**item)
         result = iterate_through_tags(tags, base_url)
