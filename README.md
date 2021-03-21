@@ -47,3 +47,8 @@ After scraping for logos and numbers, the results are passed into a new PageData
 ### Unit tests
 The tests folder contains unit tests for the functions that are used.
 To run them you need to install pytest, and then go to the root directory and run `pytest`.
+
+## Possible improvements
+* Using a trained ML model to get statistics for an image being a logo, and ordering/combining filter in that way
+* Reading filters and lambdas for scraping logos from an external JSON, giving them an "order" property and sorting by it
+* Optimizing threads for larger scale scenarios
