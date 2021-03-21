@@ -8,7 +8,10 @@ from scraper.scraper import scrape_page
 def main():
     try:
         try:
-            arguments = sys.stdin.readlines(print("Enter page URLs separated into new lines (press CTRL+D to finish inputing): "))
+            print(
+                "Enter page URLs separated into new lines (press CTRL+D to finish inputing): "
+            )
+            arguments = sys.stdin.readlines()
             if not arguments:
                 raise IndexError()
         except IndexError:
