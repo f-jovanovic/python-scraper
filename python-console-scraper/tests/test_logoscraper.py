@@ -59,5 +59,10 @@ def test_format_image_source_no_source():
 
 
 def test_format_image_source_relative_path():
-    html = BeautifulSoup(f"<img src='resources/images/image.png'></img>", "html.parser").find("img")
-    assert logoscraper.format_image_source(html, test_base_url) == f"{test_base_url}/resources/images/image.png"
+    html = BeautifulSoup(
+        f"<img src='resources/images/image.png'></img>", "html.parser"
+    ).find("img")
+    assert (
+        logoscraper.format_image_source(html, test_base_url)
+        == f"{test_base_url}/resources/images/image.png"
+    )
