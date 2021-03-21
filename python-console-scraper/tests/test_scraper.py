@@ -1,6 +1,3 @@
-import pytest
-import requests
-
 from scraper.scraper import scrape_page
 
 

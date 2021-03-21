@@ -4,7 +4,7 @@ import re
 def get_phones(html):
     if html:
         phone_regex = re.compile(
-            r"\(?\+?\d{1,3}\)?[\ \-\/]?\d{2,4}[\ \-\/]?\d{2,4}[\ \-\/]?\d{2,4}[\ \-\/]?\d{0,3}"
+            r"\(?\+?\d{1,3}\)?[ \-/]?\d{2,4}[ \-/]?\d{2,4}[ \-/]?\d{2,4}[ \-/]?\d{0,3}"
         )
         replace_pattern = re.compile(r"[/\-.]")
         phone_numbers = []
@@ -23,7 +23,7 @@ def get_phones(html):
                             phone_numbers.append(number)
 
                 except Exception:
-                    None
+                    continue
 
             if phone_numbers:
                 return phone_numbers
