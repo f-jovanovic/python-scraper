@@ -1,57 +1,62 @@
-import urllib.parse as urlparser
+import urllib.parse as urllib
 
 
-def get_logo(html, baseurl):
+def lambda_find_logo():
+    return lambda value: value and "logo" in value
+
+
+def lambda_check_for_homepage(base_url):
+    return lambda value: value and value == base_url or value == "/"
+
+
+filters = [
+    {"class_": lambda_find_logo()},
+    {"id": lambda_find_logo()},
+    {"src": lambda_find_logo()},
+]
+
+
+def get_logo(html, base_url):
     if html:
-        logoclass = html.find_all(class_=lambda x: x and "logo" in x)
-        result = iterate_through_tags(logoclass, baseurl)
+        filters.append({"href": lambda_check_for_homepage(base_url)})
+        result = test(html, base_url)
         if result:
             return result
 
-        logoid = html.find_all(id=lambda x: x and "logo" in x)
-        result = iterate_through_tags(logoid, baseurl)
-        if result:
-            return result
-
-        imagesource = html.find_all(src=lambda x: x and "logo" in x)
-        result = iterate_through_tags(imagesource, baseurl)
-        if result:
-            return result
-
-        homepagehref = html.find(
-            href=lambda value: value and value == baseurl or value == "/"
-        )
-        if homepagehref:
-            result = find_img_tag(homepagehref, baseurl)
-            if result:
-                return result
-
-        result = find_img_tag(html, baseurl)
+        result = find_img_tag(html, base_url)
         return result
 
 
-def iterate_through_tags(tags, baseurl):
+def iterate_through_tags(tags, base_url):
     if tags:
         for tag in tags:
-            return find_img_tag(tag, baseurl)
+            return find_img_tag(tag, base_url)
 
 
-def find_img_tag(item, baseurl):
+def find_img_tag(item, base_url):
     if item.name == "img":
         image = item
     else:
         image = item.find("img")
 
     if image:
-        return format_image_source(image, baseurl)
+        return format_image_source(image, base_url)
 
 
-def format_image_source(image_tag, baseurl):
-    imagesource = image_tag.get("src")
+def format_image_source(image_tag, base_url):
+    image_source = image_tag.get("src")
 
-    if not imagesource:
+    if not image_source:
         return None
 
-    if not bool(urlparser.urlparse(imagesource).netloc):
-        imagesource = urlparser.urljoin(baseurl, imagesource)
-    return imagesource
+    if not bool(urllib.urlparse(image_source).netloc):
+        image_source = urllib.urljoin(base_url, image_source)
+    return image_source
+
+
+def test(html, base_url):
+    for item in filters:
+        tags = html.find_all(**item)
+        result = iterate_through_tags(tags, base_url)
+        if result:
+            return result

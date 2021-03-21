@@ -2,7 +2,7 @@ import os
 import sys
 
 from executionhelper import execute_concurrently
-from scraper.scarper import scrape_page
+from scraper.scraper import scrape_page
 
 
 def main():
@@ -17,9 +17,9 @@ def main():
 
         if os.path.isfile(argument) and os.stat(argument).st_size != 0:
             file = open(argument, "r")
-            filecontent = file.read().split("\n")
+            file_content = file.read().split("\n")
             file.close()
-            execute_concurrently(scrape_page, filecontent)
+            execute_concurrently(scrape_page, file_content)
         else:
             print(scrape_page(argument))
 
