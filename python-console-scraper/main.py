@@ -8,20 +8,15 @@ from scraper.scraper import scrape_page
 def main():
     try:
         try:
-            argument = sys.argv[1]
-            if not argument or argument and not argument.strip():
+            arguments = sys.stdin.readlines(print("Enter page URLs separated into new lines (press CTRL+D to finish inputing): "))
+            if not arguments:
                 raise IndexError()
         except IndexError:
             print("No valid parameter was passed")
             sys.exit()
 
-        if os.path.isfile(argument) and os.stat(argument).st_size != 0:
-            file = open(argument, "r")
-            file_content = file.read().split("\n")
-            file.close()
-            execute_concurrently(scrape_page, file_content)
-        else:
-            print(scrape_page(argument))
+        if arguments.__len__():
+            execute_concurrently(scrape_page, arguments)
 
     except Exception as e:
         print("An error has occurred")
